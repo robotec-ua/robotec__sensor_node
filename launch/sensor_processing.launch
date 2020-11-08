@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+    <node pkg="robotec_sensor_processing" name="robotec_sensor_node" type="node.py" output="screen">
+        <rosparam file="$(find robotec_sensor_processing)/param/sensor_processing.yaml" command="load" />
+    </node>
+</launch>

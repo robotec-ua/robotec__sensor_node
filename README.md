@@ -1,2 +1,2 @@
-# robotec__sensor_node
-Processing data from various sensors
+# Robotec package for sensor data procesing
+Processing data from various sensors using ROS.

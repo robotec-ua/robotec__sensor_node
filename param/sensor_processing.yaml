@@ -1,0 +1,36 @@
+rate : 10
+
+ultrasonic : [
+  radiation_type : 0,
+
+  # Front sensors
+  { command : 4, port : '/dev/ttyUSB1', baudrate : 115200, id : 'front_us_sensor', topic : '/sonars', field : 0.5 },
+  { command : 4, port : '/dev/ttyUSB1', baudrate : 115200, id : 'front_left_us_sensor', topic : '/sonars', field : 0.5 },
+  { command : 4, port : '/dev/ttyUSB1', baudrate : 115200, id : 'front_right_us_sensor', topic : '/sonars', field : 0.5 },
+
+  # Rear sensors
+  { command : 5, port : '/dev/ttyUSB1', baudrate : 115200, id : 'back_us_sensor', topic : '/sonars', field : 0.5 },
+  { command : 5, port : '/dev/ttyUSB1', baudrate : 115200, id : 'back_left_us_sensor', topic : '/sonars', field : 0.5 },
+  { command : 5, port : '/dev/ttyUSB1', baudrate : 115200, id : 'back_right_us_sensor', topic : '/sonars', field : 0.5 }
+]
+
+infrared : [
+  # Front sensors
+  { command : 4, port : '/dev/ttyUSB1', baudrate : 115200, id : 'front_right_ir_sensor', topic : '/sonars', field : 0.5 },
+  { command : 4, port : '/dev/ttyUSB1', baudrate : 115200, id : 'front_left_ir_sensor', topic : '/sonars', field : 0.5 },
+
+  # Rear sensors
+  { command : 5, port : '/dev/ttyUSB1', baudrate : 115200, id : 'back_right_ir_sensor', topic : '/sonars', field : 0.5 },
+  { command : 5, port : '/dev/ttyUSB1', baudrate : 115200, id : 'back_left_ir_sensor', topic : '/sonars', field : 0.5 },
+
+  # Lift sensors
+  { command : 4, port : '/dev/ttyUSB1', baudrate : 115200, id : 'left_ir_lift_sensor', topic : '/lift', field : 0.5 },
+  { command : 4, port : '/dev/ttyUSB1', baudrate : 115200, id : 'left_limit_switch', topic : '/lift', field : 0.5 },
+  { command : 5, port : '/dev/ttyUSB1', baudrate : 115200, id : 'right_ir_lift_sensor', topic : '/lift', field : 0.5 },
+  { command : 5, port : '/dev/ttyUSB1', baudrate : 115200, id : 'right_limit_switch', topic : '/lift', field : 0.5 }
+]
+
+temperature : {
+  { command : 4, port : '/dev/ttyUSB1', baudrate : 115200, id : 'left_limit_switch', topic : '/lift', field : 0.5 },
+  { command : 5, port : '/dev/ttyUSB1', baudrate : 115200, id : 'right_limit_switch', topic : '/lift', field : 0.5 }
+}
