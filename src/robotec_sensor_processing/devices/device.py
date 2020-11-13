@@ -17,10 +17,10 @@ class Device:
     """
     def __init__(self, port, baudrate, message, topic):
         self._serial = Serial()
-        setPort(port)
-        setBaudrate(baudrate)
+        self.setPort(port)
+        self.setBaudrate(baudrate)
         self._message = message
-        self._publisher = rospy.Publisher(topic, type(self._message))
+        self._publisher = rospy.Publisher(topic, type(self._message), queue_size = 1)
 
     """
     Setter for the internal field "port". Raises an exception if the "port"

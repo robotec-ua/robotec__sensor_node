@@ -11,41 +11,23 @@ import roslib; roslib.load_manifest('robotec_sensor_processing')
 import rospy
 from sensor_msgs.msg import Range, Temperature
 from robotec_msgs.msg import Battery
-from .devices.distance_sensor import GenericDistanceSensor
-from .devices.temperature_sensor import GenericTemperatureSensor
+from robotec_sensor_processing.devices.distance_sensor import GenericDistanceSensor
+from robotec_sensor_processing.devices.temperature_sensor import GenericTemperatureSensor
 
 class Node:
-    self._sensors = []      # Array of created sensors
-
     """
     Constructor creates the node, saves the parameters and creates the sensor 
     instances.
     """
     def __init__(self):
+        self._sensors = []      # Array of created sensors
+
         # Getting ROS parameters
-        self._rate = rospy.get_param("~rate", 10)
-        sensor_dictionary = rospy.get_param("~sensors", {})
+        self._rate = rospy.Rate(rospy.get_param("~rate", 10))
+        sensor_dictionary = rospy.get_param("~sensors")
 
         # Create the sensor instances
-        createSensorInstances(sensor_dictionary)
-
-    """
-    Main function of creating sensor classes' instancess
-    """
-    def createSensorInstances(self, sensors):
-        for sensor_type in sensors :
-            typed_sensors = sensors[sensor_type]
-
-            if (sensor_type == 'ultrasonic'):
-                sensor_instances = createDistanceSensors(typed_sensors)
-
-            if (sensor_type == 'infrared'):
-                sensor_instances = createDistanceSensors(typed_sensors)
-
-            if (sensor_type == 'temperature'):
-                sensor_instances = createTemperatureSensors(typed_sensors)
-
-            self._sensors.extend(sensor_instances)
+        self.createSensorInstances(sensor_dictionary)
 
     """
     Function which creates instances of distance sensor class.
@@ -93,6 +75,24 @@ class Node:
             sensor_instances.append(GenericTemperatureSensor(port, baudrate, message, topic, command))
 
         return sensor_instances
+
+    """
+    Main function of creating sensor classes' instancess
+    """
+    def createSensorInstances(self, sensors):
+        for sensor_type in sensors :
+            typed_sensors = sensors[sensor_type]
+
+            if (sensor_type == 'ultrasonic'):
+                sensor_instances = self.createDistanceSensors(typed_sensors)
+
+            if (sensor_type == 'infrared'):
+                sensor_instances = self.createDistanceSensors(typed_sensors)
+
+            if (sensor_type == 'temperature'):
+                sensor_instances = self.createTemperatureSensors(typed_sensors)
+
+            self._sensors.extend(sensor_instances)
 
     """
     Main loop function

@@ -13,7 +13,7 @@ class GenericDistanceSensor(Device):
     parameter as an internal field
     """
     def __init__(self, port, baudrate, message, topic, command):
-        super(port, baudrate, message, topic)
+        super().__init__(port, baudrate, message, topic)
         self._command = command
 
     """
