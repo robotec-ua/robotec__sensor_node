@@ -11,8 +11,8 @@ class DailyBMS(GenericBMS):
     """
     Constructor. Delegates the parameters to the superclass.
     """
-    def __init__(self, port, baudrate, message, topic, data_size, capacity, banks):
-        super(port, baudrate, message, topic, data_size, capacity, banks)
+    def __init__(self, protocol, message, topic, data_size, capacity, banks):
+        super().__init__(protocol, message, topic, data_size, capacity, banks)
 
     """
     Calculating the overall value of voltage. The method opens

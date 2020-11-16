@@ -11,8 +11,8 @@ import roslib; roslib.load_manifest('robotec_sensor_processing')
 import rospy
 from sensor_msgs.msg import Range, Temperature
 from robotec_msgs.msg import Battery
-from robotec_sensor_processing.devices.distance_sensor import GenericDistanceSensor
-from robotec_sensor_processing.devices.temperature_sensor import GenericTemperatureSensor
+from robotec_sensor_processing.devices.device_factory import DeviceFactory
+from robotec_sensor_processing.protocols.protocol_factory import ProtocolFactory
 
 class Node:
     """
@@ -20,7 +20,9 @@ class Node:
     instances.
     """
     def __init__(self):
-        self._sensors = []      # Array of created sensors
+        self._sensors = []                          # Array of created sensors
+        self._device_factory = DeviceFactory()      # Instance of DeviceFactory class
+        self._protocol_factory = ProtocolFactory()  # Instance of ProtocolFactory class
 
         # Getting ROS parameters
         self._rate = rospy.Rate(rospy.get_param("~rate", 10))
@@ -39,17 +41,17 @@ class Node:
         # Process every sensor
         for sensor in sensors :
             # Get device data
-            port = sensor['port']
-            baudrate = sensor['baudrate']
+            protocol = self._protocol_factory.getProtocol(sensor['protocol'], sensor['port'], sensor['baudrate'])
             topic = sensor['topic']
             command = sensor['command']
+            device_type = self._device_factory.DISTANCE_SENSOR
 
             # Get a specific info for ROS messages
             message.header.frame_id = sensor['id']
             message.field_of_view = sensor['field']
 
             # Create a new instance of sensor
-            sensor_instances.append(GenericDistanceSensor(port, baudrate, message, topic, command))
+            sensor_instances.append(self._device_factory.getDevice(device_type, protocol, message, topic, command))
 
         return sensor_instances
 
@@ -63,16 +65,16 @@ class Node:
         # Process every sensor
         for sensor in sensors :
             # Get device data
-            port = sensor['port']
-            baudrate = sensor['baudrate']
+            protocol = self._protocol_factory.getProtocol(sensor['protocol'], sensor['port'], sensor['baudrate'])
             topic = sensor['topic']
             command = sensor['command']
+            device_type = self._device_factory.TEMPERATURE_SENSOR
 
             # Get a specific info for ROS messages
             message.header.frame_id = sensor['id']
 
             # Create a new instance of sensor
-            sensor_instances.append(GenericTemperatureSensor(port, baudrate, message, topic, command))
+            sensor_instances.append(self._device_factory.getDevice(device_type, protocol, message, topic, command))
 
         return sensor_instances
 
