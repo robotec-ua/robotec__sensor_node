@@ -1,6 +1,6 @@
 # TODO
 
-## dd.mm.yyyy
+## 24.11.2020
 ### Add/Remove
 * @THOSE-EYES : 
     1. `param/sensor_processing.yaml` : create a new types of devices in the param to read/write to the device through ROS topic system
